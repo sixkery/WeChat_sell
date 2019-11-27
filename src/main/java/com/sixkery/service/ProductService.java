@@ -8,6 +8,9 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+/**
+ * @author sixkery
+ */
 public interface ProductService {
     // 通过商品的 id 查询商品
     ProductInfo findOne(String productId);
@@ -26,7 +29,13 @@ public interface ProductService {
     void increaseStock(List<CartDTO> cartDTOList);
 
     // 减库存
-    void DecreaseStock(List<CartDTO> cartDTOList);
+    void decreaseStock(List<CartDTO> cartDTOList);
+
+    /** 上架 */
+    ProductInfo onSale(String productId);
+
+    /** 下架 */
+    ProductInfo offSale(String productId);
 
 
 }

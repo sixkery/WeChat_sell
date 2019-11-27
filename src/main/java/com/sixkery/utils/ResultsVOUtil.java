@@ -3,6 +3,7 @@ package com.sixkery.utils;
 import com.sixkery.VO.ResultVO;
 
 public class ResultsVOUtil {
+
     public static ResultVO success(Object object) {
         ResultVO resultVO = new ResultVO();
         resultVO.setCode(0);
@@ -12,7 +13,7 @@ public class ResultsVOUtil {
     }
 
     public static ResultVO success() {
-        return null;
+        return success(null);
     }
 
     public static ResultVO error(Integer code, String msg) {

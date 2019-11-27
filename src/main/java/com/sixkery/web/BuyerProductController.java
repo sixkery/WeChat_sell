@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author sixkery
+ */
 @RestController
 @RequestMapping(path = "/buyer/product")
 public class BuyerProductController {
@@ -30,20 +32,16 @@ public class BuyerProductController {
     @GetMapping(path = "/list")
     public ResultVO list() {
         // 1. 查询所有上架的商品
-        List<ProductInfo> productInfoList = productService.findAll();
-        // 2. 查询类目(一次性全部查询)
-        // 传统方法
-      /*  ArrayList<Integer> categoryTypeList = new ArrayList<>();
-        for (ProductInfo productInfo : productInfoList) {
-            categoryTypeList.add(productInfo.getCategoryType());
-        }*/
-
-        // 精简方法 java8 lambda
-        List<Integer> categoryTypeList = productInfoList.stream().map(e -> e.getCategoryType()).collect(Collectors.toList());
+        List<ProductInfo> productInfoList = productService.findUpAll();
+        // 2. 查询需要的类目(一次性全部查询)
+        // lambda
+        List<Integer> categoryTypeList = productInfoList.stream().map(ProductInfo::getCategoryType).collect(Collectors.toList());
 
         List<ProductCategory> productCategoryList = categoryService.findByCategoryTypeIn(categoryTypeList);
         // 3. 拼装数据
+
         List<ProductVO> productVOList = new ArrayList<>();
+
         for (ProductCategory productCategory : productCategoryList) {
             ProductVO productVO = new ProductVO();
             productVO.setCategoryName(productCategory.getCategoryName());

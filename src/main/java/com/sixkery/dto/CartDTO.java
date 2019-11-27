@@ -1,6 +1,7 @@
 package com.sixkery.dto;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author sixkery
@@ -8,9 +9,16 @@ import lombok.Data;
  */
 // 购物车对象
 @Data
+@Accessors(chain = true)
 public class CartDTO {
-    private String productId; // 商品 id
-    private Integer productQuantity; // 数量
+    /**
+     * 商品ID
+     */
+    private String productId;
+    /**
+     * 数量
+     */
+    private Integer productQuantity;
 
     public CartDTO() {
     }

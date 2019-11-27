@@ -1,6 +1,7 @@
 # 开发环境配置
 server:
   port: 8081
+  context-path: /sell
 
 
 spring:
@@ -15,8 +16,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  application:
-    name: sell
+
+  jackson:
+    default-property-inclusion: non_null
 
 ## 日志的配置
 #logging:
