@@ -2,13 +2,18 @@ package com.sixkery.VO;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * http 请求返回最外层对象
  *
  * @param <T>
+ * @author sixkery
  */
 @Data
-public class ResultVO<T> {
+public class ResultVO<T> implements Serializable {
+
+    private static final long serialVersionUID = -2556006241156181255L;
     /**
      * 错误码
      */

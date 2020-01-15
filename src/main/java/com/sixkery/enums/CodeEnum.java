@@ -6,7 +6,7 @@ package com.sixkery.enums;
 public interface CodeEnum {
     /**
      * 获取 code
-     * @return
+     * @return code
      */
     Integer getCode();
 

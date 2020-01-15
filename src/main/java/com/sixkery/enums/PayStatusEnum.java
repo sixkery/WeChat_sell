@@ -8,6 +8,9 @@ import lombok.Getter;
 
 @Getter
 public enum PayStatusEnum implements CodeEnum {
+    /**
+     * 支付状态
+     */
     WAIT(0,"等待支付"),
     SUCCESS(1,"支付成功"),
     ;

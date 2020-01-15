@@ -7,23 +7,27 @@ import com.sixkery.enums.ResultEnum;
 import com.sixkery.exception.SellException;
 import com.sixkery.repository.ProductInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author sixkery
  */
 @Service
+@CacheConfig(cacheNames = "product")
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductInfoRepository repository;
 
     @Override
+    @Cacheable(key = "'123'")
     public ProductInfo findOne(String productId) {
         return repository.findOne(productId);
     }
@@ -55,6 +59,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @CachePut(key = "'123'")
     public ProductInfo saveProduct(ProductInfo productInfo) {
 
         return repository.save(productInfo);

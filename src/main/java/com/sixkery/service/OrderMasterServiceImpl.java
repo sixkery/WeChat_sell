@@ -28,6 +28,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,10 +47,13 @@ public class OrderMasterServiceImpl implements OrderMasterService {
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private OrderMasterRepository orderMasterRepository;
+    @Autowired
+    private WebSocket webSocket;
 
     /**
      * 创建订单
-      * @param orderDTO
+     *
+     * @param orderDTO
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -59,16 +63,13 @@ public class OrderMasterServiceImpl implements OrderMasterService {
         // 1.查询商品
         for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
             ProductInfo productInfo = productService.findOne(orderDetail.getProductId());
-
             if (productInfo == null) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
-
             // 2.计算订单总价 商品单价 * 商品数量
             orderAmount = productInfo.getProductPrice()
                     .multiply(new BigDecimal(orderDetail.getProductQuantity()))
                     .add(orderAmount);
-
             //3.OrderDetail 写入到数据库
             orderDetail.setOrderId(orderId);
             orderDetail.setDetailId(KeyUtil.genUniqueKey());
@@ -76,27 +77,30 @@ public class OrderMasterServiceImpl implements OrderMasterService {
             BeanUtils.copyProperties(productInfo, orderDetail);
             orderDetailRepository.save(orderDetail);
         }
-
         // 4.写入到数据库(OrderMaster )
         OrderMaster orderMaster = new OrderMaster();
         orderDTO.setOrderId(orderId);
         BeanUtils.copyProperties(orderDTO, orderMaster);
         orderMaster.setOrderAmount(orderAmount)
-                .setOrderStatus(OrderStatusEnum.NEW.getCode()).setPayStatus(PayStatusEnum.WAIT.getCode());
+                .setOrderStatus(OrderStatusEnum.NEW.getCode()).setPayStatus(PayStatusEnum.WAIT.getCode())
+                .setCreateTime(new Date()).setUpdateTime(new Date());
         orderMasterRepository.save(orderMaster);
 
         // 扣库存
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
                 new CartDTO(e.getProductId(), e.getProductQuantity())
         ).collect(Collectors.toList());
-
         productService.decreaseStock(cartDTOList);
+
+        // 创建订单时，发送 websocket 消息
+        webSocket.sendMessage(orderDTO.getOrderId());
         return orderDTO;
     }
 
     /**
      * 查询单个订单
-      * @param orderId
+     *
+     * @param orderId
      * @return
      */
     @Override
@@ -120,7 +124,8 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 
     /**
      * 分页查询订单
-      * @param buyerOpenid
+     *
+     * @param buyerOpenid
      * @param pageable
      * @return
      */
@@ -135,6 +140,7 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 
     /**
      * 取消订单
+     *
      * @param orderDTO
      * @return
      */

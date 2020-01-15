@@ -4,10 +4,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
+ * 购物车对象
+ *
  * @author sixkery
  * @date 2019/11/12
  */
-// 购物车对象
+
 @Data
 @Accessors(chain = true)
 public class CartDTO {

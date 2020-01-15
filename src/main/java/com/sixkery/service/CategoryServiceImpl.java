@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// 分类的业务
+/**
+ * @author sixkery
+ */ // 分类的业务
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired

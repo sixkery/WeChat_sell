@@ -1,11 +1,13 @@
 package com.sixkery.exception;
 
 import com.sixkery.enums.ResultEnum;
+import lombok.Getter;
 
 /**
  * @author sixkery
  * @date 2019/11/11
  */
+@Getter
 public class SellException extends RuntimeException {
     private Integer code;
 

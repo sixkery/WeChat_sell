@@ -17,8 +17,7 @@ import org.springframework.stereotype.Service;
 public class BuyerServiceImpl implements BuyerService {
     @Autowired
     private OrderMasterService orderMasterService;
-    @Autowired
-    private BuyerService buyerService;
+
 
     @Override
     public OrderDTO findOrderOne(String openid, String orderId) {
@@ -41,7 +40,7 @@ public class BuyerServiceImpl implements BuyerService {
         if (orderDTO == null) {
             return null;
         }
-        /**判断是否是自己的订单*/
+        /* 判断是否是自己的订单 */
         if (!orderDTO.getBuyerOpenid().equals(orderId)) {
             log.error("【查询订单】订单的 openid 不一致。openid={},orderDTO={}", openid, orderDTO);
             throw new SellException(ResultEnum.ORDER_OWNER_ERROR);

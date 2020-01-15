@@ -19,6 +19,10 @@ spring:
 
   jackson:
     default-property-inclusion: non_null
+  # redis 的配置
+  redis:
+    host: 192.168.42.133
+    port: 6379
 
 ## 日志的配置
 #logging:
@@ -27,3 +31,18 @@ spring:
 #    name: log/blog-dev.log
 ## 日志的配置
 
+# 微信配置
+wechat:
+  mpAppId: qwdsdfsa
+  mpAppSecret: asdasff1334
+  openAppId: q2efd
+  openAppSecret: dfsg
+  mckId: 12dfsfdv
+  mchKey: gsh
+  keyPath: asdfaftera
+  notifyUrl: awsefterfg
+
+projectUrl:
+  wechatMpAuthorize: http://127.0.0.1:8081
+  wechatOpenAuthorize: http://127.0.0.1:8081
+  sell: http://127.0.0.1:8081

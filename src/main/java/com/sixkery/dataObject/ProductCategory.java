@@ -13,6 +13,7 @@ import java.util.Date;
 
 /**
  * 类目表
+ * @author sixkery
  */
 @Data
 @NoArgsConstructor
@@ -21,9 +22,15 @@ import java.util.Date;
 @Entity
 @DynamicUpdate // 动态更新时间
 public class ProductCategory {
+    /** 类目 id*/
     @Id
     @GeneratedValue
-    private Integer categoryId; // 类目 id
-    private String categoryName; // 类目名字
-    private Integer categoryType; // 类目 编号
+    private Integer categoryId;
+    /** 类目名字*/
+    private String categoryName;
+    /** 类目 编号*/
+    private Integer categoryType;
+
+    private Date createTime;
+    private Date updateTime;
 }

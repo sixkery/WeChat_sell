@@ -15,49 +15,43 @@
           <table class="table table-hover table-bordered">
             <thead>
             <tr>
-              <th>商品ID</th>
+              <th>类目ID</th>
               <th>名称</th>
-              <th>图片</th>
-              <th>单价</th>
-              <th>库存</th>
-              <th>描述</th>
-              <th>类目</th>
+              <th>类型</th>
               <th>创建时间</th>
               <th>修改时间</th>
               <th colspan="2">操作</th>
             </tr>
             </thead>
             <tbody>
-            <#list productInfoPage.content as productInfo>
+            <#list categoryList as cayegory>
               <tr class="success">
-                <td>${productInfo.productId}</td>
-                <td>${productInfo.productName}</td>
-                <td>${productInfo.productIcon}</td>
-                <td>${productInfo.productPrice}</td>
-                <td>${productInfo.productStock}</td>
-                <td>${productInfo.productDescription}</td>
-                <td>${productInfo.categoryType}</td>
-                <td>${productInfo.createTime}</td>
-                <td>${productInfo.updateTime}</td>
+                <td>${cayegory.categoryId}</td>
+                <td>${cayegory.categoryName}</td>
+                <td>${cayegory.categoryType}</td>
+                <td>${cayegory.createTime}</td>
+                <td>${cayegory.updateTime}</td>
                 <td>
-                  <a href="/sell/seller/product/index?productId=${productInfo.productId}" type="button"
+                  <a href="/sell/seller/category/index?categoryId=${cayegory.categoryId}" type="button"
                      class="btn btn-default btn-primary">修改</a>
                 </td>
                 <td>
-                    <#if productInfo.getProductStatusEnum().message == "在架">
+                    <#--<#if productInfo.getProductStatusEnum().message == "在架">
                       <a href="/sell/seller/product/off_sale?productId=${productInfo.productId}" type="button"
                          class="btn btn-default btn-danger">下架商品</a>
                     <#else>
                       <a href="/sell/seller/product/on_sale?productId=${productInfo.productId}" type="button"
                          class="btn btn-default btn-danger">上架商品</a>
-                    </#if>
+                    </#if>-->
+
+
                 </td>
               </tr>
             </#list>
             </tbody>
           </table>
-        </div>
-          <#--分页-->
+       <#-- </div>
+          &lt;#&ndash;分页&ndash;&gt;
         <div class="col-md-12 column">
           <ul class="pagination pull-right">
               <#if currentPage lte 1>
@@ -79,9 +73,11 @@
               </#if>
           </ul>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>
+
+
 </body>
 </html>
